@@ -51,7 +51,6 @@ export const WEDDING = {
     "https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=900&q=82",
     "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=900&q=82",
     "https://images.unsplash.com/photo-1544078751-58fee2d8a03b?auto=format&fit=crop&w=900&q=82",
-    "https://images.unsplash.com/photo-1519227132094-0b4d4c0d0f04?auto=format&fit=crop&w=900&q=82",
     "https://images.unsplash.com/photo-1478146896981-b80fe463b330?auto=format&fit=crop&w=900&q=82"
   ],
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
 import {
   CalendarDays, Clock3, MapPin, Navigation, Share2, Copy, Volume2, VolumeX,
@@ -63,6 +63,40 @@ function App() {
   const [menu, setMenu] = useState(false);
   const [copied, setCopied] = useState(false);
   const [rsvpSent, setRsvpSent] = useState(false);
+  const [autoplayBlocked, setAutoplayBlocked] = useState(false);
+  const audioRef = useRef(null);
+
+  const toggleMusic = async () => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    if (muted) {
+      audio.muted = false;
+      try {
+        await audio.play();
+        setMuted(false);
+        setAutoplayBlocked(false);
+      } catch {
+        audio.muted = true;
+        setAutoplayBlocked(true);
+      }
+    } else {
+      audio.pause();
+      setMuted(true);
+    }
+  };
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    audio.muted = false;
+    audio.play().catch(() => {
+      audio.muted = true;
+      setMuted(true);
+      setAutoplayBlocked(true);
+    });
+  }, [opened]);
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
@@ -257,12 +291,17 @@ function App() {
 
       <footer className="footer">
         <span>Made with love for {WEDDING.bride} & {WEDDING.groom}</span>
-        <button onClick={() => setMuted(v => !v)} aria-label="Toggle music">
+        <button onClick={() => toggleMusic()} aria-label="Toggle music">
           {muted ? <VolumeX size={16}/> : <Volume2 size={16}/>} Music
         </button>
       </footer>
 
-      <button className="floating-music" onClick={() => setMuted(v => !v)} aria-label="Mute or unmute background music">
+      {autoplayBlocked && (
+        <button className="music-prompt" onClick={() => toggleMusic()}>
+          Tap to play music
+        </button>
+      )}
+      <button className="floating-music" onClick={() => toggleMusic()} aria-label="Mute or unmute background music">
         {muted ? <VolumeX/> : <Volume2/>}
       </button>
 
@@ -273,7 +312,7 @@ function App() {
         </div>
       )}
 
-      <audio src={WEDDING.musicUrl} loop autoPlay={!muted} muted={muted} />
+      <audio ref={audioRef} src={WEDDING.musicUrl} loop autoPlay muted={muted} />
     </main>
   );
 }
