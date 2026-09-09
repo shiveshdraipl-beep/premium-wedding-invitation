@@ -2,6 +2,8 @@
 // EDIT ONLY THIS FILE TO PERSONALIZE
 // ===============================
 
+const assetUrl = (path) => `${import.meta.env.BASE_URL}${path}`;
+
 export const WEDDING = {
   bride: "Supriya",
   groom: "Amit",
@@ -35,8 +37,8 @@ export const WEDDING = {
     { type: "THE GRAND FINALE", name: "Reception", date: "2026-12-02", time: "8:00 PM", venue: "The Taj Mahal Palace", icon: "♡", description: "A grand celebration to honor the union and welcome the couple into their new life together! 💍" }
   ],
 
-  bridePhoto: "/images/bride.webp",
-  groomPhoto: "/images/groom.webp",
+  bridePhoto: assetUrl("images/bride.webp"),
+  groomPhoto: assetUrl("images/groom.webp"),
   couplePhoto: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=88",
 
   brideIntro: "Sweet, beautiful, and always right… at least according to her! 😄❤️",
@@ -53,7 +55,7 @@ export const WEDDING = {
     "https://images.unsplash.com/photo-1478146896981-b80fe463b330?auto=format&fit=crop&w=900&q=82"
   ],
 
-  musicUrl: "/music/wedding-music.mp3",
+  musicUrl: assetUrl("music/wedding-music.mp3"),
   rsvpWhatsapp: "917602007341",
   rsvpGuestName: "[GUEST NAME]"
 };
